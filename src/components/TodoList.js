@@ -30,9 +30,8 @@ const getVisibleTodos = (todos, filter) => {
 
 const TodoList = () => (
   <Query query={GET_TODOS}>
-    {({ data: { todos, visibilityFilter }, loading, error }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>Error :(</p>;
+    {({ data: { todos, visibilityFilter } }) => {
+      console.log({ todos, visibilityFilter });
       return (
         <ul>
           {getVisibleTodos(todos, visibilityFilter).map(todo => (

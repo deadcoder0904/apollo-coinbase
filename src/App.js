@@ -43,16 +43,19 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
       )
     );
   }
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+  if (networkError)
+    console.log(`[Network error]: ${JSON.stringify(networkError)}`);
 });
 
 const httpLink = new HttpLink({
   uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
 });
 
+const link = ApolloLink.from([errorLink, stateLink, httpLink]);
+
 const client = new ApolloClient({
-  cache,
-  link: ApolloLink.from([stateLink, errorLink, httpLink])
+  link,
+  cache
 });
 
 const App = () => (

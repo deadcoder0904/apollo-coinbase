@@ -29,8 +29,10 @@ export const resolvers = {
         completed: false,
         __typename: "TodoItem"
       };
-
-      cache.writeData({ data: previous.todos.concat([newTodo]) });
+      const data = {
+        todos: previous.todos.concat([newTodo])
+      };
+      cache.writeData({ data });
       return newTodo;
     },
     toggleTodo: (_, variables, { cache }) => {
