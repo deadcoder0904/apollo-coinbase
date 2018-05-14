@@ -1,4 +1,4 @@
-import { gql } from "graphql-tag";
+import gql from "graphql-tag";
 
 export const defaults = {
   todos: [],
@@ -11,7 +11,7 @@ export const resolvers = {
   Mutation: {
     addTodo: (_, { text }, { cache }) => {
       const query = gql`
-        query GetTodos {
+        {
           todos @client {
             id
             text
@@ -21,7 +21,6 @@ export const resolvers = {
       `;
 
       const previous = cache.readQuery({ query });
-      console.log({ previous });
 
       const newTodo = {
         id: nextTodo++,
@@ -38,13 +37,12 @@ export const resolvers = {
     toggleTodo: (_, variables, { cache }) => {
       const id = `TodoItem:${variables.id}`;
       const fragment = gql`
-        fragment completedTodo on TodoItem {
+        fragment completeTodo on TodoItem {
           completed
         }
       `;
 
       const todo = cache.readFragment({ fragment, id });
-      console.log(todo);
 
       const data = { ...todo, completed: !todo.completed };
       cache.writeData({ id, data });

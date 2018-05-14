@@ -43,8 +43,7 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
       )
     );
   }
-  if (networkError)
-    console.log(`[Network error]: ${JSON.stringify(networkError)}`);
+  if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
 const httpLink = new HttpLink({
